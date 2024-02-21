@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
+import TCACoordinators
 
 @main
 struct TCACoordinatorExampleModifiedApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            AppCoordinatorView(
+                coordinator: Store.init(
+                    initialState: AppCoordinator.State.initialState,
+                    reducer: {
+                        AppCoordinator()
+                    })
+                )
         }
     }
 }

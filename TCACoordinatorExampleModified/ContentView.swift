@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// dafault contentview, not used..
 struct ContentView: View {
     var body: some View {
         VStack {
