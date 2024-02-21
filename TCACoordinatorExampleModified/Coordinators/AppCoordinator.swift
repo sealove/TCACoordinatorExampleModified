@@ -13,17 +13,19 @@ import ComposableArchitecture
 import TCACoordinators
 
 // AppCoordinator를 통해 이동할 뷰 선언
+// Coordinator를 사용하기 위해선 Screen, Coordinator, CoordinatorView 3가지가 필요하다.
 @Reducer
 struct AppScreen {
     enum State: Equatable {
         case splash(SplashStore.State)
         case tutorial(TutorialStore.State)
-        //TODO: main
+        case main
     }
     
     enum Action {
         case splash(SplashStore.Action)
         case tutorial(TutorialStore.Action)
+        case main
     }
     
     var body: some ReducerOf<Self> {
@@ -53,12 +55,12 @@ struct AppCoordinator {
             switch action {
                 case .routeAction(_, action: .splash(.completed)):
                     if state.isCompletedTutorial {
-                         //TODO: main
+                        state.routes = [.root(.main)]
                     } else {
                         state.routes.presentCover(.tutorial(TutorialStore.State.init()), embedInNavigationView: true)
                     }
                 case .routeAction(_, action: .tutorial(.completedTutorial)):
-                    //TODO: main
+                    state.routes = [.root(.main)]
                     break
                 default: break
             }
@@ -85,7 +87,12 @@ struct AppCoordinatorView: View {
                         CaseLet(/AppScreen.State.tutorial, 
                                  action: AppScreen.Action.tutorial,
                                  then: TutorialView.init)
-
+                    case .main:
+                        MainCoordinatorView(
+                            coordinator: Store.init(initialState: .initialState, reducer: {
+                                MainCoordinator()
+                            })
+                        )
                 }
             }
             
