@@ -80,10 +80,10 @@
 		714C5AF32B841541002DF142 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				714C5B032B861403002DF142 /* MainTabView.swift */,
 				714C5AFD2B8563E0002DF142 /* HomeTabView.swift */,
 				714C5B012B856429002DF142 /* FeedListTabView.swift */,
 				714C5AFF2B8563F6002DF142 /* ProfileTabView.swift */,
-				714C5B032B861403002DF142 /* MainTabView.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";

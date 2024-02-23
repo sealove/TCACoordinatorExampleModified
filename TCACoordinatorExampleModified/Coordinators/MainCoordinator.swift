@@ -17,17 +17,17 @@ import TCACoordinators
 @Reducer
 struct MainScreen {
     enum State: Equatable {
-        case main(MainTabStore.State)
+        case tabs(TabsCoordinator.State)
 //        case search
 //        case settings
     }
     
     enum Action {
-        case main(MainTabStore.Action)
+        case tab(TabsCoordinator.Action)
     }
     
     var body: some ReducerOf<Self> {
-        Scope(state: /MainScreen.State.main, action: /MainScreen.Action.main, child: { MainTabStore() })
+        Scope(state: /MainScreen.State.tabs, action: /MainScreen.Action.tab, child: { TabsCoordinator() })
     }
 }
 
@@ -37,7 +37,7 @@ struct MainCoordinator {
         var routes: [Route<MainScreen.State>]
         
         static let initialState = State(
-            routes: [.root(.main(.init()), embedInNavigationView: true)]
+            routes: [.root(.tabs(.initialState), embedInNavigationView: true)]
         )
     }
     
@@ -68,10 +68,10 @@ struct MainCoordinatorView: View {
         TCARouter(coordinator) { store in
             SwitchStore(store) { screen in
                 switch screen {
-                    case .main:
-                        CaseLet(/MainScreen.State.main,
-                                 action: MainScreen.Action.main,
-                                 then: MainTabView.init)
+                    case .tabs:
+                        CaseLet(/MainScreen.State.tabs,
+                                 action: MainScreen.Action.tab,
+                                 then: TabsCoordinatorView.init)
 //                    case .search:
 //                    case .settings:
                 }
